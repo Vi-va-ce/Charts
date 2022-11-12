@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.StudentDao">
+    <select id="selectStudent" resultType="com.example.demo.Domain.Student">
+        SELECT f_name, l_name, TN_NO as age, Ref_NO as id, Seq_NO as grade
+        FROM STUDENT
+        WHERE 1=1
+    </select>
+    <select id="selectCountry" resultType="com.example.demo.Domain.Country">
+        SELECT city_code AS cityCode, country, lat, SUM(invc_amt) AS Amount,lng
+        FROM tb_export
+        GROUP BY country
+        ORDER BY SUM(invc_amt);
+    </select>
+    <select id="selectTrades" resultType="com.example.demo.Domain.Trades">
+        SELECT invmt as investments ,exprt as exports,imprt as imports,tax as taxes
+        FROM studentdb.tradetypes;
+    </select>
+    <select id="selectTotTrades" resultType="com.example.demo.Domain.Trades">
+        SELECT SUM(invmt) as investments ,SUM(exprt) as exports,SUM(imprt) as imports,SUM(tax) as taxes
+        FROM studentdb.tradetypes;
+    </select>
+
+    <insert id="insertStudent" parameterType="com.example.demo.Domain.Student">
+        INSERT INTO STUDENT (f_name,l_name,age,id,grade)
+        VALUES(#{fName},#{lName},#{age},#{id},#{grade})
+    </insert>
+    <update id="updateStudent" parameterType="com.example.demo.Domain.Student">
+        UPDATE STUDENT
+        SET f_name = #{fName}, l_name = #{lName}, age=#{age},grade=#{grade}, id =#{id}
+        WHERE id = 2;
+    </update>
+</mapper>
